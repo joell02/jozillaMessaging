@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <title>Jozilla</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script id="user-online" type="text/template">
+        <div class="user-online">
+            <p><span class="user" style="color: {% raw -%} {{ color }} {%- endraw %};"> {% raw -%} {{ user }} {%- endraw %} </span> has connected <span class="date">{% raw -%} {{ date }} {%- endraw %}</span></p>
+        </div>
+    </script>
+    <script id="user-message" type="text/template">
+        <div class="total-message">
+            <div class = "picture">
+                <img src="../static/images/profile-picture.png" height="50px" width="50px;">
+            </div>
+            <div class="user-message">
+                <div class="message-top">
+                    <h5 class="user" style="color: {% raw -%} {{ color }} {%- endraw %};">{% raw -%}{{ user }}{%- endraw %} </h5>
+                    <p class="date">{% raw -%}{{ date }}{%- endraw %} </p>
+                </div>
+                <div class="message-bottom">
+                    <p class="message">{% raw -%}{{ message }}{%- endraw %} </p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="../static/index.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="topnav" role="navigation">
+        <div class="container-fluid" id="navbarSupportedContent">
+            <i id="open-sidebar" class="fas fa-bars fa-lg"></i>
+            <ul class="navbar-nav mr.auto">
+                <li class="nav-item">
+                    <h4 class="nav-link" id="title" href="/">Jozilla Messaging</h4>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="user-img" class="nav-item">
+                    <img src="../static/images/profile-picture.png" height="30px" width="30px;">
+                </li>
+                <li class="nav-item">
+                    <h6 class="user nav-link" id="channelUser" href="/"></h6>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="sidebar">
+        <div class="sidebar-container">
+            <h4 id="channel-title">Public Channels</h4>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">#</span>
+                </div>
+                <input id="new-channel-name" type="text" class="form-control" autocomplete="off"
+                    placeholder="New Channel">
+                <div class="input-group-append">
+                    <button id="new-channel" class="btn btn-outline-secondary" type="submit">Create</button>
+                </div>
+            </div>
+            <div class="channel-container">
+                {% for channelName in channelNames %}
+                <a class="channel" data-channel="{{channelName}}" href="#">#{{channelName}}</a>
+                {% endfor %}
+            </div>
+            <div class="users-container">
+                <h3>Users</h3>
+                <hr style="padding: 0; margin: 0;">
+                <div class="name-container">
+                    {% for user in users %}
+                    <a class="online" style="color: {{color[loop.index0]}}" data-name="{{user}}" href="#">{{user}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="messages-container"></div>
+
+        <div id="message" class="input-group mb-3">
+            <input id="message-send-text" type="text" class="form-control" autocomplete="off" autofocus
+                placeholder="Message channel">
+            <div class="input-group-append">
+                <button id="message-send" class="btn btn-outline-secondary" type="submit">Send</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Welcome to Jozilla Messaging</h3>
+                        <img class="icon" src="../static/images/messages.png" height="50px" width="50px">
+                    </div>
+                    <div class="modal-body">
+                        <h6>Please enter your name to start chatting:</h6>
+                        <div class="int">
+                            <div style="padding-top: 10px;" id="un" class="input-group mb-3">
+                                <input id="username" type="text" class="form-control" autocomplete="off" autofocus
+                                    placeholder="Enter name">
+                                <div class="input-group-append">
+                                    <button id="username-button" class="btn btn-outline-dark"
+                                        type="submit">Start</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

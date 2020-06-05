@@ -1,0 +1,227 @@
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #1c1c1b;
+}
+
+
+@media only screen and (min-width: 750px) {
+    .sidebar {
+        margin: 0;
+        padding: 0;
+        width: 16%;
+        background-color: #343a40;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+        border-top: 1px solid black;
+    }
+    .messages-container {
+        width: 83%;
+        position: absolute;
+        left: 16%;
+        overflow-y: auto;
+        height: 75%;
+    }
+    #message {
+        width: 70%;
+        position: fixed;
+        border: none;
+        bottom: 5%;
+        left: 22%;
+    }
+    .total-message {
+        display: flex;
+        flex-direction: row;
+        padding: 0px 10% 0px 10%;
+    }    
+    #open-sidebar {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .sidebar {
+        z-index:100;
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        background-color: #343a40;
+        border-top: 1px solid black;
+        margin-top: 65px;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        transition: 1s; /* 0.5 second transition effect to slide in the sidebar */
+    }
+    .sidebar-container {
+        display: none;
+    }
+    .messages-container {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        overflow-y: auto;
+        height: 73%;
+    }   
+    #message {
+        width: 70%;
+        position: fixed;
+        border: none;
+        bottom: 5%;
+        left: 15%;
+    } 
+    .total-message {
+        display: flex;
+        flex-direction: row;
+        padding: 0px 5% 0px 5%;
+    }    
+    #open-sidebar {
+        padding: 10;
+        margin: 0;
+        color: grey;
+    }
+    #open-sidebar:hover {
+        background-color: darkslategray;
+    }
+    #title {
+        padding-top: 10px;
+        font-size: 20px;
+    }
+    #user-img {
+        display: none;
+    }
+}
+
+
+.sidebar #channel-title {
+    padding: 10px 0px 5px 20px;
+    color: #131517;
+    
+}
+
+.sidebar a {
+    display: block;
+    color: #6c757d;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 0px 10px;
+    text-decoration: none;
+  }
+
+.sidebar a.active {
+    background-color: #424a52;
+    color: white;
+}
+.sidebar a:hover:not(.active) {
+    background-color: #424a52;
+    color: grey;
+    text-decoration: none;
+}
+
+.header {
+    display: inline-flex;
+}
+
+.header img {
+    margin-left: 20px;
+}
+
+#message input{
+    background-color: #424a52;
+    color: white;
+}
+
+.user-online p {
+    color: #bcc2cc;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+
+.user-message {
+    color: #bcc2cc;
+    display: flex;
+    padding-left: 10px;  
+    flex-direction: column;
+}
+
+.message-top {
+    display: flex;  
+    flex-direction: row;
+}
+
+.message {
+    margin-bottom: 0px;
+}
+
+.message-bottom {
+    margin-bottom: 1rem;
+}
+
+.date {
+    padding-left: 20px;
+    padding-top: 5px;
+    margin-bottom: 0px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.user {
+    margin-bottom:0;
+    font-weight: bold;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.users-container {
+    border-radius: 5px;
+    background-color: #212529;
+    margin: 10px;
+    margin-top: 30px;
+}
+
+.users-container .name-container {
+    overflow-y: auto;
+    max-height: 25%;
+    min-height: 10%;
+}
+
+.users-container h6 {
+    color: #bcc2cc;
+    padding-left: 20px;
+}
+
+.users-container h3 {
+    text-align: center;
+    color: #bcc2cc;
+}
+
+.users-container a {
+    text-align: center;
+}
+
+.channel-container {
+    max-height: 25%;
+    overflow-y: auto;
+}
+
