@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.innerHTML = input.username;
         a.dataset.name = input.username;
         a.style.color = input.color;
-        document.querySelector('.users-container').append(a);
+        document.querySelector('.name-container').append(a);
     })
 
     socket.on('user is online', input => {
